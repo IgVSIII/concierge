@@ -107,7 +107,7 @@ func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Me
 			msg.Text = errorMessage()
 			return msg
 		}
-		msg.Text = aboutResident(resident)
+		msg.Text = aboutMe(resident)
 		return msg
 	}
 
@@ -129,7 +129,7 @@ func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Me
 					msg.Text = errorMessage()
 					return msg
 				}
-				resident, err := t.DB.GetResidentByHomeAndApartment(home.Name, converApartment)
+				residents, err := t.DB.GetResidentsByHomeAndApartment(home.Name, converApartment)
 
 				if err != nil {
 					log.Println("TG:commandController Resident not found")
@@ -137,7 +137,7 @@ func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Me
 					return msg
 				}
 
-				msg.Text = aboutResident(resident)
+				msg.Text = aboutResidents(residents)
 				return msg
 			} else {
 				msg.Text = aboutHome(home)

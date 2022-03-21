@@ -76,11 +76,11 @@ func (c DBConnect) GetResident(id string) (common.Resident, error) {
 	return residentConvert(resident), result.Error
 }
 
-func (c DBConnect) GetResidentByHomeAndApartment(home string, apartment int) (common.Resident, error) {
+func (c DBConnect) GetResidentsByHomeAndApartment(home string, apartment int) ([]common.Resident, error) {
 	log.Println("DB:GetResident: get resident by home - %s and apartment - %d", home, apartment)
-	resident := Resident{}
-	result := c.db.Where("home = ? and apartment = ?", home, apartment).Find(&resident)
-	return residentConvert(resident), result.Error
+	residents := []Resident{}
+	result := c.db.Where("home = ? and apartment = ?", home, apartment).Find(&residents)
+	return residentsConvert(residents), result.Error
 }
 
 func (c DBConnect) GetResidentsByHome(home string) ([]common.Resident, error) {

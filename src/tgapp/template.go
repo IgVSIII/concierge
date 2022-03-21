@@ -49,12 +49,24 @@ func regHomes(homes []common.Home) string {
 	return result
 }
 
-func aboutResident(resident common.Resident) string {
-	return "Данные жильца:\n" +
+func aboutMe(resident common.Resident) string {
+	return "Данные обо мне:\n" +
 		"Telegramm - " + "@" + resident.Name + "\n" +
 		"Дом - " + resident.Home + "\n" +
 		"Квартира - " + fmt.Sprintf("%d", resident.Apartment) + "\n" +
 		"Доп. Информация - " + resident.Description
+}
+
+func aboutResidents(residents []common.Resident) string {
+	result := ""
+	for _, resident := range residents {
+		result += "Данные жильца:\n" +
+			"Telegramm - " + "@" + resident.Name + "\n" +
+			"Дом - " + resident.Home + "\n" +
+			"Квартира - " + fmt.Sprintf("%d", resident.Apartment) + "\n" +
+			"Доп. Информация - " + resident.Description + "\n"
+	}
+	return result
 }
 
 func aboutCoplex(complex common.ResidentilaComplex) string {
