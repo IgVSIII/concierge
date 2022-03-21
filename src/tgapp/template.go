@@ -3,6 +3,8 @@ package tgapp
 import (
 	"concierge-bot/src/common"
 	"fmt"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 const (
@@ -41,12 +43,30 @@ func getHomes(homes []common.Home) string {
 	return result
 }
 
+/*
 func regHomes(homes []common.Home) string {
 	result := "Укажите в сообщение ваш дом:\n"
 	for _, value := range homes {
 		result += value.Name + "\n"
 	}
 	return result
+}
+*/
+func regHomes() string {
+	result := "Укажите в сообщение ваш дом:\n"
+	return result
+}
+
+func regHomesButton(homes []common.Home) tgbotapi.InlineKeyboardMarkup {
+	keyboard := tgbotapi.InlineKeyboardMarkup{}
+	for _, home := range homes {
+		var row []tgbotapi.InlineKeyboardButton
+		btn := tgbotapi.NewInlineKeyboardButtonData(home.Name, home.Name)
+		row = append(row, btn)
+		keyboard.InlineKeyboard = append(keyboard.InlineKeyboard, row)
+	}
+	return keyboard
+	//msg.ReplyMarkup = keyboard
 }
 
 func aboutMe(resident common.Resident) string {

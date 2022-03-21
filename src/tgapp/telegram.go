@@ -30,7 +30,6 @@ func (t TgApp) Run() {
 	for update := range updates {
 		if update.Message != nil {
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
-
 			if update.Message.From.IsBot {
 				msg.Text = botAnswer()
 			} else if update.Message.IsCommand() {
@@ -42,8 +41,30 @@ func (t TgApp) Run() {
 			if _, err := bot.Send(msg); err != nil {
 				log.Println("TG:RUN Send message %w ", err)
 			}
+		} else if update.CallbackQuery != nil {
+			msg := tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, "")
+			msg = t.collbackController(msg, update.CallbackQuery)
+			msg.ParseMode = "html"
+			if _, err := bot.Send(msg); err != nil {
+				log.Println("TG:RUN Send message %w ", err)
+			}
 		}
 	}
+}
+
+func (t TgApp) collbackController(msg tgbotapi.MessageConfig, update *tgbotapi.CallbackQuery) tgbotapi.MessageConfig {
+	err := t.DB.UpdateResidentAddHome(
+		fmt.Sprintf("%d", update.From.ID),
+		update.Data,
+		REG_STATUS_HOME,
+	)
+	if err != nil {
+		log.Println("TG:otherController Failed update home %w ", err)
+		msg.Text = errorMessage()
+		return msg
+	}
+	msg.Text = "Теперь укажите номер квартиры"
+	return msg
 }
 
 func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Message) tgbotapi.MessageConfig {
@@ -70,7 +91,9 @@ func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Me
 			msg.Text = errorMessage()
 			return msg
 		}
-		msg.Text = regHomes(homes)
+		//msg.Text = regHomes(homes)
+		msg.Text = regHomes()
+		msg.ReplyMarkup = regHomesButton(homes)
 		return msg
 	}
 
