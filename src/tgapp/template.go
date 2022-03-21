@@ -22,18 +22,18 @@ const (
 )
 
 func getHelp() string {
-	return "\\**Список команд:\\**\n" +
-		"__Для всех пользователей__\n" +
+	return "<b>Список команд:</b> \n" +
+		"<i>Для всех пользователей</i> \n" +
 		"/" + COMMAND_REGISTRATION + " - Регистрация (запустить процесс регистрации)\n" +
 		"/" + COMMAND_INFO + " получить информацию по жк\n" +
-		"__Для зарегестрированных__\n" +
+		"<i>Для зарегестрированных</i> \n" +
 		"/" + COMMAND_ABOUTME + " - посмотреть информацию о себе\n" +
 		"/" + COMMAND_INFO_HOMES + " информация по домам жк\n" +
 		"Так же это сообщение можно вызвать командой /" + COMMAND_HELP
 }
 
 func getHomes(homes []common.Home) string {
-	result := "Список домов:\n"
+	result := "<b>Список домов: </b>\n"
 	for _, value := range homes {
 		result += value.Name + " получить информацию о доме /" + COMMAND_INFO + "_" + value.Name + "\n"
 		result += "А так можно получить информацию о жильце квартиры (после : указать нужный номер) /" + COMMAND_INFO + "_" + value.Name + ":1" + "\n"
@@ -50,7 +50,7 @@ func regHomes(homes []common.Home) string {
 }
 
 func aboutMe(resident common.Resident) string {
-	return "Данные обо мне:\n" +
+	return "<b>Данные обо мне:</b> \n" +
 		"Telegramm - " + "@" + resident.Name + "\n" +
 		"Дом - " + resident.Home + "\n" +
 		"Квартира - " + fmt.Sprintf("%d", resident.Apartment) + "\n" +
@@ -60,7 +60,7 @@ func aboutMe(resident common.Resident) string {
 func aboutResidents(residents []common.Resident) string {
 	result := ""
 	for _, resident := range residents {
-		result += "Данные жильца:\n" +
+		result += "<b>Данные жильца:</b> \n" +
 			"Telegramm - " + "@" + resident.Name + "\n" +
 			"Дом - " + resident.Home + "\n" +
 			"Квартира - " + fmt.Sprintf("%d", resident.Apartment) + "\n" +
@@ -70,13 +70,13 @@ func aboutResidents(residents []common.Resident) string {
 }
 
 func aboutCoplex(complex common.ResidentilaComplex) string {
-	return "О комплексе:\n" +
+	return "<b>О комплексе:</b> \n" +
 		"Название - " + complex.Name + "\n" +
 		"Доп. Информация - " + complex.Description
 }
 
 func aboutHome(home common.Home) string {
-	return "Данные дома:\n" +
+	return "<b>Данные дома:</b> \n" +
 		"Жк - " + home.ResidentialComplex + "\n" +
 		"Дом - " + home.Name + "\n" +
 		"Всего квартир - " + fmt.Sprintf("%d", home.Apartments) + "\n" +
@@ -87,7 +87,7 @@ func aboutHome(home common.Home) string {
 }
 
 func botAnswer() string {
-	return "Общение с ботами не поддерживается"
+	return fmt.Sprintf("Общение с ботами не поддерживается")
 }
 
 func notSupport() string {

@@ -38,6 +38,7 @@ func (t TgApp) Run() {
 			} else {
 				msg = t.otherController(msg, update.Message)
 			}
+			msg.ParseMode = "html"
 			if _, err := bot.Send(msg); err != nil {
 				log.Println("TG:RUN Send message %w ", err)
 			}
