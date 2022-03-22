@@ -78,7 +78,6 @@ func (t TgApp) collbackController(msg tgbotapi.MessageConfig, update *tgbotapi.C
 }
 
 func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Message) tgbotapi.MessageConfig {
-	fmt.Println(update.Command())
 	if update.Command() == COMMAND_START || update.Command() == COMMAND_HELP {
 		msg.Text = getHelp()
 		return msg

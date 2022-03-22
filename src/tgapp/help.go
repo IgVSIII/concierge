@@ -1,6 +1,9 @@
 package tgapp
 
-import "concierge-bot/src/common"
+import (
+	"concierge-bot/src/common"
+	"strings"
+)
 
 type DBConnector interface {
 	UpdateResidentAddDescription(
@@ -29,4 +32,12 @@ type DBConnector interface {
 	GetResidentsByHomeAndApartment(home string, apartment int) ([]common.Resident, error)
 	GetResidentsByHome(home string) ([]common.Resident, error)
 	GetResident(id string) (common.Resident, error)
+}
+
+func rightPad(s string, padStr string, pLen int) string {
+	countRepeat := pLen - len(s)
+	if countRepeat < 0 {
+		countRepeat = 0
+	}
+	return strings.Repeat(padStr, countRepeat) + s
 }

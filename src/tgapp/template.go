@@ -118,11 +118,13 @@ func apartmentsMap(home common.Home, apartments []int) string {
 			apartEnd := apartStart + home.Apartments
 			apartList := fmt.Sprintf("Этаж %d: \n", floor)
 			for apart := apartStart; apart < apartEnd; apart++ {
+				apartAdd := ""
 				if apartments[apart] == 0 {
-					apartList += fmt.Sprintf(" %d", apart)
+					apartAdd = rightPad(fmt.Sprintf("%d", apart), "-", 5)
 				} else {
-					apartList += fmt.Sprintf(" <b>|%d|</b>", apart)
+					apartAdd = rightPad(fmt.Sprintf("<b>%d</b>", apart), "-", 5)
 				}
+				apartList += apartAdd
 			}
 			apartList += "\n"
 			result += apartList
