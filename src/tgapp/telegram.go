@@ -37,18 +37,28 @@ func (t TgApp) Run() {
 			} else {
 				msg = t.otherController(msg, update.Message)
 			}
+
+			if msg.Text == "" {
+				msg.Text = notFound()
+			}
 			msg.ParseMode = "html"
 			if _, err := bot.Send(msg); err != nil {
 				log.Println("TG:RUN Send message %w ", err)
 			}
+
 		} else if update.CallbackQuery != nil {
 			msg := tgbotapi.NewMessage(update.CallbackQuery.Message.Chat.ID, "")
 			msg = t.collbackController(msg, update.CallbackQuery)
+
+			if msg.Text == "" {
+				msg.Text = notFound()
+			}
 			msg.ParseMode = "html"
 			if _, err := bot.Send(msg); err != nil {
 				log.Println("TG:RUN Send message %w ", err)
 			}
 		}
+
 	}
 }
 
@@ -167,6 +177,30 @@ func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Me
 				msg.Text = aboutHome(home)
 				return msg
 			}
+		}
+
+		if update.Command() == COMMAND_APARTMENTS+"_"+home.Name {
+			residents, err := t.DB.GetResidentsByHome(home.Name)
+
+			if err != nil {
+				log.Println("TG:commandController Residents not found")
+				msg.Text = notFound()
+				return msg
+			}
+
+			apartmentsCount := home.Apartments*(home.Floors-home.FirstResidentialFloor+1)*home.Entrances + 1
+			apartments := make([]int, apartmentsCount, apartmentsCount)
+
+			arrayControl := home.Apartments * home.Floors * home.Entrances
+
+			for _, resident := range residents {
+				if resident.Apartment < arrayControl {
+					apartments[resident.Apartment] = 1
+				}
+			}
+
+			msg.Text = apartmentsMap(home, apartments)
+			return msg
 		}
 	}
 

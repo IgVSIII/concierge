@@ -21,6 +21,7 @@ const (
 	COMMAND_START        = "start"
 	COMMAND_REGISTRATION = "registration"
 	COMMAND_ABOUTME      = "aboutme"
+	COMMAND_APARTMENTS   = "apartments"
 )
 
 func getHelp() string {
@@ -103,7 +104,32 @@ func aboutHome(home common.Home) string {
 		"Этажей - " + fmt.Sprintf("%d", home.Floors) + "\n" +
 		"Первый жилой этаж - " + fmt.Sprintf("%d", home.FirstResidentialFloor) + "\n" +
 		"Подъездов - " + fmt.Sprintf("%d", home.Entrances) + "\n" +
-		"Доп. Информация - " + home.Description
+		"Доп. Информация - " + home.Description + "\n" +
+		"Информация по квартирам - /" + COMMAND_APARTMENTS + "_" + home.Name
+}
+
+func apartmentsMap(home common.Home, apartments []int) string {
+	result := "<b>Данные дома:</b> \n\n"
+
+	for enrtance := 1; enrtance <= home.Entrances; enrtance++ {
+		result += fmt.Sprintf("Подъезд - %d \n", enrtance)
+		for floor := home.FirstResidentialFloor; floor <= home.Floors; floor++ {
+			apartStart := (floor-home.FirstResidentialFloor)*home.Apartments + 1
+			apartEnd := apartStart + home.Apartments
+			apartList := fmt.Sprintf("Этаж %d: \n", floor)
+			for apart := apartStart; apart < apartEnd; apart++ {
+				if apartments[apart] == 0 {
+					apartList += fmt.Sprintf(" %d", apart)
+				} else {
+					apartList += fmt.Sprintf(" <b>|%d|</b>", apart)
+				}
+			}
+			apartList += "\n"
+			result += apartList
+		}
+	}
+
+	return result
 }
 
 func botAnswer() string {

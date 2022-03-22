@@ -21,7 +21,7 @@ func main() {
 	})
 
 	connect.InitDB()
-	connect.FillDB()
+	//connect.FillDB()
 
 	tg := tgapp.TgApp{
 		Token: conf.BotToken,

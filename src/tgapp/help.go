@@ -27,5 +27,6 @@ type DBConnector interface {
 	GetHome(id string) (common.Home, error)
 	GetResidentilaComplex() (common.ResidentilaComplex, error)
 	GetResidentsByHomeAndApartment(home string, apartment int) ([]common.Resident, error)
+	GetResidentsByHome(home string) ([]common.Resident, error)
 	GetResident(id string) (common.Resident, error)
 }
