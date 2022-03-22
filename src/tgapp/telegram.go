@@ -149,7 +149,7 @@ func (t TgApp) commandController(msg tgbotapi.MessageConfig, update *tgbotapi.Me
 			if len(splitText) > 1 {
 				converApartment, err := strconv.Atoi(splitText[1])
 				if err != nil {
-					log.Println("TG:commandController Apartment not convert %s ", splitText[1])
+					log.Println(fmt.Sprintf("TG:commandController Apartment not convert %s ", splitText[1]))
 					msg.Text = errorMessage()
 					return msg
 				}
@@ -189,7 +189,7 @@ func (t TgApp) otherController(msg tgbotapi.MessageConfig, update *tgbotapi.Mess
 			return msg
 		}
 		if home.Name == "" {
-			log.Println("TG:otherController Home not found %s ", update.Text)
+			log.Println(fmt.Sprintf("TG:otherController Home not found %s ", update.Text))
 			msg.Text = notFound()
 			return msg
 		}
@@ -208,7 +208,7 @@ func (t TgApp) otherController(msg tgbotapi.MessageConfig, update *tgbotapi.Mess
 	} else if resident.Status == REG_STATUS_HOME {
 		converApartment, err := strconv.Atoi(update.Text)
 		if err != nil {
-			log.Println("TG:otherController Apartment not convert %s ", update.Text)
+			log.Println(fmt.Sprintf("TG:otherController Apartment not convert %s ", update.Text))
 			msg.Text = notFound()
 			return msg
 		}

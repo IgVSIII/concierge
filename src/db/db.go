@@ -55,6 +55,19 @@ func (c DBConnect) GetResidentilaComplex() (common.ResidentilaComplex, error) {
 	return residentilaComplexConvert(complex), result.Error
 }
 
+func (c DBConnect) CreateResidentilaComplex(
+	name string,
+	description string,
+) error {
+	log.Println("DB:CreateResidentilaComplex: create resident")
+	complex := common.ResidentilaComplex{
+		Name:        name,
+		Description: description,
+	}
+	result := c.db.Create(&complex)
+	return result.Error
+}
+
 func (c DBConnect) GetHomes() ([]common.Home, error) {
 	log.Println("DB:GetHome: get homes")
 	homes := []Home{}
@@ -69,6 +82,29 @@ func (c DBConnect) GetHome(id string) (common.Home, error) {
 	return homeConvert(home), result.Error
 }
 
+func (c DBConnect) CreateHome(
+	name string,
+	description string,
+	residentialComplex string,
+	floors int,
+	firstResidentialFloor int,
+	apartments int,
+	entrances int,
+) error {
+	log.Println(fmt.Sprintf("DB:CreateHome: create home"))
+	home := Home{
+		Name:                  name,
+		Description:           description,
+		ResidentialComplex:    residentialComplex,
+		Floors:                floors,
+		FirstResidentialFloor: firstResidentialFloor,
+		Apartments:            apartments,
+		Entrances:             entrances,
+	}
+	result := c.db.Create(&home)
+	return result.Error
+}
+
 func (c DBConnect) GetResident(id string) (common.Resident, error) {
 	log.Println("DB:GetResident: get resident")
 	resident := Resident{}
@@ -77,14 +113,14 @@ func (c DBConnect) GetResident(id string) (common.Resident, error) {
 }
 
 func (c DBConnect) GetResidentsByHomeAndApartment(home string, apartment int) ([]common.Resident, error) {
-	log.Println("DB:GetResident: get resident by home - %s and apartment - %d", home, apartment)
+	log.Println(fmt.Sprintf("DB:GetResident: get resident by home - %s and apartment - %d", home, apartment))
 	residents := []Resident{}
 	result := c.db.Where("home = ? and apartment = ?", home, apartment).Find(&residents)
 	return residentsConvert(residents), result.Error
 }
 
 func (c DBConnect) GetResidentsByHome(home string) ([]common.Resident, error) {
-	log.Println("DB:GetResident: get residents by home - %s", home)
+	log.Println(fmt.Sprintf("DB:GetResident: get residents by home - %s", home))
 	residents := []Resident{}
 	result := c.db.Select("apartment").Where("home = ?", home).Find(&residents)
 	return residentsConvert(residents), result.Error
@@ -98,7 +134,7 @@ func (c DBConnect) CreateResidentFull(
 	home string,
 	status string,
 ) error {
-	log.Println("DB:CreateResidentFull: create resident %s", id)
+	log.Println(fmt.Sprintf("DB:CreateResidentFull: create resident %s", id))
 	resident := Resident{
 		ID:          id,
 		Name:        name,
@@ -119,7 +155,7 @@ func (c DBConnect) UpdateResidentFull(
 	home string,
 	status string,
 ) error {
-	log.Println("DB:UpdateResidentFull: update resident %d", id)
+	log.Println(fmt.Sprintf("DB:UpdateResidentFull: update resident %s", id))
 	resident := Resident{
 		ID:          id,
 		Name:        name,
@@ -137,7 +173,7 @@ func (c DBConnect) CreateResidentBase(
 	name string,
 	status string,
 ) error {
-	log.Println("DB:CreateResidentBase: create resident %s", id)
+	log.Println(fmt.Sprintf("DB:CreateResidentBase: create resident %s", id))
 	resident := Resident{
 		ID:     id,
 		Name:   name,
@@ -152,17 +188,14 @@ func (c DBConnect) UpdateResidentAddHome(
 	home string,
 	status string,
 ) error {
-	log.Println("DB:UpdateResidentAddHome: update resident %s", id)
+	log.Println(fmt.Sprintf("DB:UpdateResidentAddHome: update resident %s", id))
 	resident := Resident{
 		ID: id,
 	}
-	fmt.Println(resident)
-	//result := c.db.Model(&resident).Update("home", "status")
 	result := c.db.Model(&resident).Updates(Resident{
 		Home:   home,
 		Status: status,
 	})
-	//db.Model(&user).Updates(User{Name: "hello", Age: 18, Active: false})
 	return result.Error
 }
 
@@ -171,11 +204,10 @@ func (c DBConnect) UpdateResidentAddApartment(
 	apartment int,
 	status string,
 ) error {
-	log.Println("DB:UpdateResidentAddApartment: update resident %s", id)
+	log.Println(fmt.Sprintf("DB:UpdateResidentAddApartment: update resident %s", id))
 	resident := Resident{
 		ID: id,
 	}
-	//result := c.db.Model(&resident).Update("apartment", "status")
 	result := c.db.Model(&resident).Updates(Resident{
 		Apartment: apartment,
 		Status:    status,
@@ -188,13 +220,12 @@ func (c DBConnect) UpdateResidentAddDescription(
 	description string,
 	status string,
 ) error {
-	log.Println("DB:UpdateResidentAddDescription: update resident %s", id)
+	log.Println(fmt.Sprintf("DB:UpdateResidentAddDescription: update resident %s", id))
 	resident := Resident{
 		ID:          id,
 		Description: description,
 		Status:      status,
 	}
-	//result := c.db.Model(&resident).Update("description", "status")
 	result := c.db.Model(&resident).Updates(Resident{
 		Description: description,
 		Status:      status,

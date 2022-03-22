@@ -10,18 +10,18 @@ type Resident struct {
 }
 
 type ResidentilaComplex struct {
-	Name        string `gorm:"primary_key"`
-	Description string
-	Homes       []Home `gorm:"foreignKey:ResidentialComplex"`
+	Name        string `gorm:"primary_key" ,json:"name" ,yaml:"name"`
+	Description string `json:"description" ,yaml:"description"`
+	Homes       []Home `gorm:"foreignKey:ResidentialComplex" ,json:"homes" ,yaml:"homes"`
 }
 
 type Home struct {
-	Name                  string `gorm:"primary_key"`
-	Description           string
-	ResidentialComplex    string
-	Floors                int
-	FirstResidentialFloor int
-	Apartments            int
-	Entrances             int
+	Name                  string `gorm:"primary_key" ,json:"name" ,yaml:"name"`
+	Description           string `json:"description" ,yaml:"description"`
+	ResidentialComplex    string `json:"residentilaComplex" ,yaml:"residentilaComplex"`
+	Floors                int    `json:"floors" ,yaml:"floors"`
+	FirstResidentialFloor int    `json:"firstResidentialFloor" ,yaml:"firstResidentialFloor"`
+	Apartments            int    `json:"apartments" ,yaml:"apartments"`
+	Entrances             int    `json:"entrances" ,yaml:"entrances"`
 	//Residents             []Resident `gorm:"foreignKey:Home"`
 }

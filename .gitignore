@@ -12,6 +12,7 @@
 *.out
 /secret
 config.yaml
+db.json
 /cmd/bot_test/
 
 # Dependency directories (remove the comment below to include it)

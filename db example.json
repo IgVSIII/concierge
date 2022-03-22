@@ -1,0 +1,24 @@
+{
+    "name": "ЖК SkyPark",
+    "description": "О ЖК SkyPark",
+    "homes": [
+        {
+            "name": "1_1_1",
+            "description": "Кадастровый номер",
+            "residentilaComplex": "ЖК SkyPark",
+            "floors": 25,
+            "firstResidentialFloor": 2,
+            "apartments": 14,
+            "entrances": 1
+        },
+        {
+            "name": "1_2_1",
+            "description": "Кадастровый номер",
+            "residentilaComplex": "ЖК SkyPark",
+            "floors": 25,
+            "firstResidentialFloor": 2,
+            "apartments": 14,
+            "entrances": 1
+        }
+    ]
+}
