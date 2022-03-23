@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -36,6 +38,13 @@ func GetConfig() Config {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("./")
+
+	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	fmt.Println("DB_HOST")
+	host := os.Getenv("DB_HOST")
+	fmt.Println(host)
+
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			log.Println("Config:GetConfig: Config file was not found")
@@ -44,7 +53,7 @@ func GetConfig() Config {
 		}
 	}
 
-	viper.AutomaticEnv()
+	fmt.Println(viper.AllKeys())
 
 	return Config{
 		BotToken:   viper.GetString("botToken"),

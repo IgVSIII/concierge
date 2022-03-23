@@ -1,5 +1,5 @@
 botToken: "test"
-admintToken: "test"
+adminToken: "test"
 db:
    host: "localhost"
    name: "postgres"

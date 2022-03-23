@@ -4,10 +4,12 @@ import (
 	"concierge-bot/src/config"
 	"concierge-bot/src/db"
 	"concierge-bot/src/tgapp"
+	"log"
 )
 
 func main() {
 	conf := config.GetConfig()
+	log.Println(conf)
 
 	connect := db.GetConnect(db.DBConfig{
 		Host:     conf.DB.Host,
@@ -18,7 +20,7 @@ func main() {
 	})
 
 	connect.InitDB()
-	//connect.FillDB()
+	connect.FillDB()
 
 	tg := tgapp.TgApp{
 		Token: conf.BotToken,
