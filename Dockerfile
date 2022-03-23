@@ -1,17 +1,21 @@
-FROM golang:1.17-buster as builder
+FROM golang:1.17-alpine as builder
 
 WORKDIR /app
 
-COPY go.* ./
+COPY go.mod .
+COPY go.sum .
+
 RUN go mod download
 
-COPY . ./
+COPY . .
 
 # Build the binary.
 RUN go build -o bot ./cmd/bot/main.go
 
-FROM alpine:last
+FROM alpine
 
 COPY --from=builder /app/ /app/
 
-CMD ["/app/bot"]
+WORKDIR /app
+
+CMD ["./bot"]
