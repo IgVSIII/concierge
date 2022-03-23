@@ -4,6 +4,7 @@ import (
 	"concierge-bot/src/common"
 	"fmt"
 	"log"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -32,6 +33,7 @@ func (d DBConfig) getConnect() string {
 
 func GetConnect(conf DBConfig) DBConnect {
 	dsn := conf.getConnect()
+	time.Sleep(5 * time.Second)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalln("DB:GetConnect: %w ", err)
