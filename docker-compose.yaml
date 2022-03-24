@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres:alpine
+    container_name: pg-docker
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : pass
+      POSTGRES_DB: postgres
+      POSTGRES_PORT: 5432
+    restart: always
+  bot-concierge:
+    image: igorvsiii/bot-concierge
+    container_name: bot-concierge
+    depends_on:
+      - postgresql
+    links:
+      - postgresql
+    environment:
+      BOTTOKEN: test
+      DB_HOST : postgresql
+      DB_NAME : postgres
+      DB_PORT : 5432
+      DB_USER : postgres
+      DB_PASSWORD : pass        
