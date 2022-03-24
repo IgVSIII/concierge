@@ -101,11 +101,12 @@ func aboutHome(home common.Home) string {
 		"Жк - " + home.ResidentialComplex + "\n" +
 		"Дом - " + home.Name + "\n" +
 		"Всего квартир - " + fmt.Sprintf("%d", home.Apartments) + "\n" +
+		"Нумерация квартиры от - " + fmt.Sprintf("%d", home.FirstApartment) + "\n" +
 		"Этажей - " + fmt.Sprintf("%d", home.Floors) + "\n" +
 		"Первый жилой этаж - " + fmt.Sprintf("%d", home.FirstResidentialFloor) + "\n" +
 		"Подъездов - " + fmt.Sprintf("%d", home.Entrances) + "\n" +
-		"Доп. Информация - " + home.Description + "\n" +
-		"Информация по квартирам - /" + COMMAND_APARTMENTS + "_" + home.Name
+		"Доп. Информация - " + home.Description + "\n"
+	//"Информация по квартирам - /" + COMMAND_APARTMENTS + "_" + home.Name
 }
 
 func apartmentsMap(home common.Home, apartments []int) string {

@@ -17,6 +17,7 @@ func homeConvert(home Home) common.Home {
 		ResidentialComplex:    home.ResidentialComplex,
 		Floors:                home.Floors,
 		FirstResidentialFloor: home.FirstResidentialFloor,
+		FirstApartment:        home.FirstApartment,
 		Apartments:            home.Apartments,
 		Entrances:             home.Entrances,
 	}

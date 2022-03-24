@@ -42,6 +42,7 @@ func (c DBConnect) FillDB() {
 			home.Floors,
 			home.FirstResidentialFloor,
 			home.Apartments,
+			home.FirstApartment,
 			home.Entrances,
 		)
 		if err != nil {

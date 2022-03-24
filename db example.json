@@ -9,6 +9,7 @@
             "floors": 25,
             "firstResidentialFloor": 2,
             "apartments": 14,
+            "firstApartment": 1,
             "entrances": 1
         },
         {
@@ -18,6 +19,17 @@
             "floors": 25,
             "firstResidentialFloor": 2,
             "apartments": 14,
+            "firstApartment": 1,
+            "entrances": 1
+        },
+        {
+            "name": "1_2_2",
+            "description": "Кадастровый номер",
+            "residentilaComplex": "ЖК SkyPark",
+            "floors": 25,
+            "firstResidentialFloor": 2,
+            "apartments": 14,
+            "firstApartment": 337,
             "entrances": 1
         }
     ]

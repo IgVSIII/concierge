@@ -91,6 +91,7 @@ func (c DBConnect) CreateHome(
 	floors int,
 	firstResidentialFloor int,
 	apartments int,
+	firstApartment int,
 	entrances int,
 ) error {
 	log.Println(fmt.Sprintf("DB:CreateHome: create home"))
@@ -101,6 +102,7 @@ func (c DBConnect) CreateHome(
 		Floors:                floors,
 		FirstResidentialFloor: firstResidentialFloor,
 		Apartments:            apartments,
+		FirstApartment:        firstApartment,
 		Entrances:             entrances,
 	}
 	result := c.db.Create(&home)

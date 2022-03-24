@@ -21,5 +21,6 @@ type Home struct {
 	Floors                int
 	FirstResidentialFloor int
 	Apartments            int
+	FirstApartment        int
 	Entrances             int
 }

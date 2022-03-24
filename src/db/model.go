@@ -22,6 +22,7 @@ type Home struct {
 	Floors                int    `json:"floors" ,yaml:"floors"`
 	FirstResidentialFloor int    `json:"firstResidentialFloor" ,yaml:"firstResidentialFloor"`
 	Apartments            int    `json:"apartments" ,yaml:"apartments"`
+	FirstApartment        int    `json:"firstApartment" ,yaml:"firstApartment"`
 	Entrances             int    `json:"entrances" ,yaml:"entrances"`
 	//Residents             []Resident `gorm:"foreignKey:Home"`
 }
